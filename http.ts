@@ -1,7 +1,25 @@
 // import { Moduletest } from "./Moduletest";
-
 const http: any = require('http');
 const fs: any = require('fs');
+// const mysql: any = require('mysql');
+
+// console.log(mysql);
+
+// const dbconfig = {
+//   host: 'localhost',
+//   user: 'root',
+//   password: 'pass',
+//   port: 3000,
+//   database: 'aitrading_db'
+// }
+
+// const connection = mysql.createConnection(dbconfig);
+// // console.log(connection);
+// const sql: string = `SELECT round(AVG(OPEN)) AS avg_open, round(AVG(high)) AS avg_high, round(AVG(low)) AS avg_low, round(AVG(close)) AS avg_close from kosdak_000250_d`;
+// connection.query(sql, (error: any, rows: Array<any>) => {
+//   if (error) throw error;
+//   console.log(rows);
+// })
 
 
 // const modtest = Moduletest;
@@ -68,13 +86,25 @@ const server: any = http.createServer((req: any, res: any) => {
           });            
           console.log(jsA);
         });
-
-        
-        
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         res.end(index);
         break;
+
+      case '/select_db': 
+        const sql: string = `SELECT round(AVG(OPEN)) AS avg_open, round(AVG(high)) AS avg_high, round(AVG(low)) AS avg_low, round(AVG(close)) AS avg_close from kosdak_000250_d`;
+        connection.query(sql, (error:any, rows:Array<any>) => {
+          if (error) throw error;
+          console.log(rows);
+          res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+          res.end(rows);
+        });
+
+        break;
+
+        
+        
+      
 
         // fs.readFileSync("./a.js", (error: Error, buffer: Buffer) => {          
         //   console.log(buffer.toString());
